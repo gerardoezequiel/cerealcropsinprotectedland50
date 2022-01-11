@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width"
+    />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="stylesheet" href="mapbox/mapbox-gl.css" />
+    <link rel="stylesheet" href="css/qgis2web.css" />
+    <style>
+      html,
+      body,
+      #map {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+    </style>
+    <title></title>
+  </head>
+  <body>
+    <div id="map">
+      <nav id="menu"></nav>
+      <div id="distance" class="distance-container"></div>
+    </div>
+    <script src="js/qgis2web_expressions.js"></script>
+    <script src="./mapbox/mapbox-gl.js"></script>
+    <script src="data/NonEEAcountriescopy_0.js"></script>
+    <script src="data/Protectedlandareacoverbycerealcrop50_1.js"></script>
+    <script src="data/ocean_2.js"></script>
+    <script src="data/NonEEAcountries_3.js"></script>
+    <script src="./mapbox/style.js"></script>
+    <script src="./js/Autolinker.min.js"></script>
+    <script>
+      var map = new mapboxgl.Map({
+        container: "map",
+        style: styleJSON,
+        center: [5.235452042789662, 45.45021139126977],
+        zoom: 3,
+        bearing: 360.0,
+        attributionControl: false,
+      });
+      map.addControl(new mapboxgl.NavigationControl(), "top-left");
+
+      var autolinker = new Autolinker({
+        truncate: { length: 30, location: "smart" },
+      });
+
+      map.on("click", "lyr_NonEEAcountriescopy_0_0", function (e) {
+        var description =
+          '<table>\
+                    <tr>\
+                        <td colspan="2">' +
+          (e.features[0].properties["ADM0_A3"] !== null
+            ? autolinker.link(
+                e.features[0].properties["ADM0_A3"].toLocaleString()
+              )
+            : "") +
+          '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' +
+          (e.features[0].properties["NAME"] !== null
+            ? autolinker.link(e.features[0].properties["NAME"].toLocaleString())
+            : "") +
+          "</td>\
+                    </tr>\
+                </table>";
+
+        new mapboxgl.Popup()
+          .setLngLat(e.lngLat)
+          .setHTML(description)
+          .addTo(map);
+      });
+
+      // Change the cursor to a pointer when the mouse is over the places layer.
+      map.on("mouseenter", "lyr_NonEEAcountriescopy_0_0", function () {
+        map.getCanvas().style.cursor = "pointer";
+      });
+
+      // Change it back to a pointer when it leaves.
+      map.on("mouseleave", "lyr_NonEEAcountriescopy_0_0", function () {
+        map.getCanvas().style.cursor = "";
+      });
+      map.on(
+        "click",
+        "lyr_Protectedlandareacoverbycerealcrop50_1_0",
+        function (e) {
+          var description =
+            '<table>\
+                    <tr>\
+                        <th scope="row">Site name</th>\
+                        <td>' +
+            (e.features[0].properties["siteName"] !== null
+              ? autolinker.link(
+                  e.features[0].properties["siteName"].toLocaleString()
+                )
+              : "") +
+            '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Crop coverage [%] </th>\
+                        <td>' +
+            (e.features[0].properties["Cropcover"] !== null
+              ? autolinker.link(
+                  e.features[0].properties["Cropcover"].toLocaleString()
+                )
+              : "") +
+            '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Cultivated area</th>\
+                        <td>' +
+            (e.features[0].properties["AREA"] !== null
+              ? autolinker.link(
+                  e.features[0].properties["AREA"].toLocaleString()
+                )
+              : "") +
+            '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Area of protected land</th>\
+                        <td>' +
+            (e.features[0].properties["Shape_Area"] !== null
+              ? autolinker.link(
+                  e.features[0].properties["Shape_Area"].toLocaleString()
+                )
+              : "") +
+            "</td>\
+                    </tr>\
+                </table>";
+
+          new mapboxgl.Popup()
+            .setLngLat(e.lngLat)
+            .setHTML(description)
+            .addTo(map);
+        }
+      );
+
+      // Change the cursor to a pointer when the mouse is over the places layer.
+      map.on(
+        "mouseenter",
+        "lyr_Protectedlandareacoverbycerealcrop50_1_0",
+        function () {
+          map.getCanvas().style.cursor = "pointer";
+        }
+      );
+
+      // Change it back to a pointer when it leaves.
+      map.on(
+        "mouseleave",
+        "lyr_Protectedlandareacoverbycerealcrop50_1_0",
+        function () {
+          map.getCanvas().style.cursor = "";
+        }
+      );
+      map.on("click", "lyr_ocean_2_0", function (e) {
+        var description =
+          '<table>\
+                    <tr>\
+                        <td colspan="2">' +
+          (e.features[0].properties["featurecla"] !== null
+            ? autolinker.link(
+                e.features[0].properties["featurecla"].toLocaleString()
+              )
+            : "") +
+          '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' +
+          (e.features[0].properties["scalerank"] !== null
+            ? autolinker.link(
+                e.features[0].properties["scalerank"].toLocaleString()
+              )
+            : "") +
+          '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' +
+          (e.features[0].properties["min_zoom"] !== null
+            ? autolinker.link(
+                e.features[0].properties["min_zoom"].toLocaleString()
+              )
+            : "") +
+          "</td>\
+                    </tr>\
+                </table>";
+
+        new mapboxgl.Popup()
+          .setLngLat(e.lngLat)
+          .setHTML(description)
+          .addTo(map);
+      });
+
+      // Change the cursor to a pointer when the mouse is over the places layer.
+      map.on("mouseenter", "lyr_ocean_2_0", function () {
+        map.getCanvas().style.cursor = "pointer";
+      });
+
+      // Change it back to a pointer when it leaves.
+      map.on("mouseleave", "lyr_ocean_2_0", function () {
+        map.getCanvas().style.cursor = "";
+      });
+      map.on("click", "lyr_NonEEAcountries_3_0", function (e) {
+        var description =
+          '<table>\
+                    <tr>\
+                        <td colspan="2">' +
+          (e.features[0].properties["ADM0_A3"] !== null
+            ? autolinker.link(
+                e.features[0].properties["ADM0_A3"].toLocaleString()
+              )
+            : "") +
+          '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' +
+          (e.features[0].properties["NAME"] !== null
+            ? autolinker.link(e.features[0].properties["NAME"].toLocaleString())
+            : "") +
+          "</td>\
+                    </tr>\
+                </table>";
+
+        new mapboxgl.Popup()
+          .setLngLat(e.lngLat)
+          .setHTML(description)
+          .addTo(map);
+      });
+
+      // Change the cursor to a pointer when the mouse is over the places layer.
+      map.on("mouseenter", "lyr_NonEEAcountries_3_0", function () {
+        map.getCanvas().style.cursor = "pointer";
+      });
+
+      // Change it back to a pointer when it leaves.
+      map.on("mouseleave", "lyr_NonEEAcountries_3_0", function () {
+        map.getCanvas().style.cursor = "";
+      });
+    </script>
+  </body>
+</html>
